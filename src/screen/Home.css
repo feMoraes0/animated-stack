@@ -11,6 +11,8 @@ div.page-card {
   position: absolute;
   border-radius: 10px;
   box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.5);
+  z-index: 0;
+  transition: all 2000ms;
 }
 
 div.card4 {
@@ -36,4 +38,10 @@ div.card1 {
   margin-left: 5vw;
   transform: translateY(10vh);
   z-index: 6;
+}
+
+.card-depois {
+  z-index: 0;
+  transform: translateY(-100vh) !important;
+  background-color: red !important;
 }
