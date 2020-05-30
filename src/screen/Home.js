@@ -3,6 +3,7 @@ import './Home.css';
 
 function Home() {
   const children = ['card-1', 'card-2', 'card-3', 'card-4'];
+  const childrenLenght = 4;
 
   /**
    * @param {List} elements
@@ -26,52 +27,55 @@ function Home() {
   }
 
   function nextCard() {
-    const actualCard = children.shift();
-    const element = document.getElementById(actualCard).classList;
+    if (children.length === childrenLenght) {
+      const actualCard = children.shift();
+      const element = document.getElementById(actualCard).classList;
 
-    element.add('go-next');
+      element.add('go-next');
 
-    const swapInterval = setInterval(() => {
-      handleClassesSwapAnimation(children, actualCard);
-      children.push(actualCard);
-      clearInterval(swapInterval);
-    }, 500);
+      const swapInterval = setInterval(() => {
+        handleClassesSwapAnimation(children, actualCard);
+        children.push(actualCard);
+        clearInterval(swapInterval);
+      }, 500);
+    }
   }
 
   function previousCard() {
-    const lastCard = children.pop();
-    const element = document.getElementById(lastCard).classList;
+    if (children.length === childrenLenght) {
+      const lastCard = children.pop();
+      const element = document.getElementById(lastCard).classList;
 
-    element.add('go-next');
+      element.add('go-next');
 
-    const swapInterval = setInterval(() => {
-      handleClassesSwapAnimation(children.reverse(), lastCard);
-      children.push(lastCard);
-      children.reverse();
-      clearInterval(swapInterval);
-    }, 500);
+      const swapInterval = setInterval(() => {
+        handleClassesSwapAnimation(children.reverse(), lastCard);
+        children.push(lastCard);
+        children.reverse();
+        clearInterval(swapInterval);
+      }, 500);
+    }
   }
 
   return (
     <div className='home-body'>
       <button onClick={() => nextCard()} type='button'>Go Next</button>
-      <button onClick={() => previousCard()} type='button'>Go Back</button>
-      <div id='cards'>
-        <div id='card-1' className='page-card card1'>
-          <p>1</p>
-        </div>
-        <div id='card-2' className='page-card card2'>
-          <p>2</p>
-        </div>
-        <div id='card-3' className='page-card card3'>
-          <p>3</p>
-        </div>
-        <div id='card-4' className='page-card card4'>
-          <p>4</p>
-        </div>
+      <button className='back' onClick={() => previousCard()} type='button'>Go Back</button>
+      <div id='card-1' className='page-card card1' style={{ backgroundColor: 'red' }}>
+        <p>1</p>
+      </div>
+      <div id='card-2' className='page-card card2' style={{ backgroundColor: 'blue' }}>
+        <p>2</p>
+      </div>
+      <div id='card-3' className='page-card card3' style={{ backgroundColor: 'yellow' }}>
+        <p>3</p>
+      </div>
+      <div id='card-4' className='page-card card4' style={{ backgroundColor: 'white' }}>
+        <p>4</p>
       </div>
     </div>
   );
 }
+
 
 export default Home;
