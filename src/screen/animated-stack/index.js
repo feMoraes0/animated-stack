@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
 import DOMHelper from '../../services/DOMHelper';
+import Animation from '../../services/Animation';
 import Cards from '../components/cards';
 import Button from '../components/button';
 
-function CardCarrousel() {
+function AnimatedStack() {
   const [cardsId, setCardsId] = useState([]);
   const [numberOfCards, setNumberOfCards] = useState(0);
 
@@ -20,38 +21,16 @@ function CardCarrousel() {
     setNumberOfCards(listOfChildren.length);
   }, []);
 
-
-  /**
-   * @param {List} elements
-   * @param {String} currentElementId
-   */
-  function handleClassesSwapAnimation(elements, currentElementId) {
-    const currentElementValue = DOMHelper.getClassListById(currentElementId).value;
-    let nextElementValue = currentElementValue.replace(' go-next', '');
-
-    elements.forEach((element) => {
-      const elementValue = DOMHelper.getClassListById(element).value;
-      DOMHelper.getClassListById(element).value = nextElementValue;
-      nextElementValue = elementValue;
-    });
-
-    const removeInterval = setInterval(() => {
-      DOMHelper.getClassListById(currentElementId).value = nextElementValue;
-      DOMHelper.getClassListById(currentElementId).remove('go-next');
-      clearInterval(removeInterval);
-    }, 250);
-  }
-
   function nextCard() {
     if (cardsId.length === numberOfCards) {
       const localCards = cardsId;
       const actualCard = localCards.shift();
-      const element = DOMHelper.getClassListById(actualCard);
+      const actualCardClassList = DOMHelper.getClassListById(actualCard);
 
-      element.add('go-next');
+      actualCardClassList.add('go-next');
 
       const swapInterval = setInterval(() => {
-        handleClassesSwapAnimation(localCards, actualCard);
+        Animation.handleClassesSwapAnimation(localCards, actualCard, 'go-next', 250);
         localCards.push(actualCard);
         setCardsId(localCards);
         clearInterval(swapInterval);
@@ -62,14 +41,13 @@ function CardCarrousel() {
   function previousCard() {
     if (cardsId.length === numberOfCards) {
       const localCards = cardsId;
-
       const lastCard = localCards.pop();
-      const element = DOMHelper.getClassListById(lastCard);
+      const actualCardClassList = DOMHelper.getClassListById(lastCard);
 
-      element.add('go-next');
+      actualCardClassList.add('go-next');
 
       const swapInterval = setInterval(() => {
-        handleClassesSwapAnimation(localCards.reverse(), lastCard);
+        Animation.handleClassesSwapAnimation(localCards.reverse(), lastCard, 'go-next', 250);
         localCards.push(lastCard);
         localCards.reverse();
         setCardsId(localCards);
@@ -102,5 +80,4 @@ function CardCarrousel() {
   );
 }
 
-
-export default CardCarrousel;
+export default AnimatedStack;

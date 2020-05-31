@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import CardCarrousel from './screen/card-carrousel';
+import AnimatedStack from './screen/animated-stack';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CardCarrousel />
+    <AnimatedStack />
   </React.StrictMode>,
   document.getElementById('root'),
 );
